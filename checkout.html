@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – Marco Art Prints</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; background: #000; color: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 500px; margin: 60px auto; background: #111; padding: 30px; border-radius: 10px; }
+    h1 { text-align: center; color: #d4af37; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: 500; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: none; border-radius: 5px; }
+    button { background: #d4af37; color: #000; padding: 12px; margin-top: 20px; width: 100%; border: none; font-weight: 600; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #c19b2e; }
+    p { font-size: 0.9rem; text-align: center; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Checkout</h1>
+    <form id="checkoutForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="address">Shipping Address</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <button type="submit">Continue to Payment</button>
+    </form>
+    <p>You will be redirected to PayPal to complete your purchase.</p>
+  </div>
+
+  <script>
+    const form = document.getElementById("checkoutForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // You could send this data to a backend service to email fargnom14@gmail.com
+      window.location.href =
+        "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=fargnom14@gmail.com&currency_code=EUR&amount=100&item_name=Marco%20Art%20Print";
+    });
+  </script>
+</body>
+</html>
