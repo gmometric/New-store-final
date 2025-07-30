@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – Marco Art Prints</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #000; color: #fff; margin: 0; padding: 0; }
+    .container { max-width: 500px; margin: 60px auto; background: #111; padding: 30px; border-radius: 10px; }
+    h1 { text-align: center; color: #d4af37; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: none; border-radius: 5px; }
+    button { background: #d4af37; color: #000; padding: 12px; margin-top: 20px; width: 100%; border: none; font-weight: bold; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #c19b2e; }
+    #paypal-button-container { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Checkout</h1>
+    <form id="checkoutForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="address">Shipping Address</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <button type="submit">Continue to Payment</button>
+    </form>
+
+    <div id="paypal-button-container" style="display:none;"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("checkoutForm");
+    const paypalContainer = document.getElementById("paypal-button-container");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      form.style.display = "none";
+      paypalContainer.style.display = "block";
+
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: "100.00", currency_code: "EUR" }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert("Payment completed by " + details.payer.name.given_name);
+
+            // Here you would normally send the form data + payment info to a backend to email you
+          });
+        }
+      }).render("#paypal-button-container");
+    });
+  </script>
+</body>
+</html>
